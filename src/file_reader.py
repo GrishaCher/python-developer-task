@@ -18,6 +18,6 @@ def read_single_csv(file_path: str) -> List[Product]:
             try:
                 product = Product.from_dict(row)
                 products.append(product)
-            except (ValueError, KeyError) as e:
-                print(f"Ошибка в файле {file_path}: строка {row}. Ошибка: {e}")
+            except Exception as e:
+                raise csv.Error(f"Ошибка формата CSV в файле {file_path}: {e}")
     return products
