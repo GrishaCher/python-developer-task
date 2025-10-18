@@ -24,7 +24,8 @@ def main():
         validate_files(args.files)
 
         products = read_csv_files(args.files)
-
+        if products == []:
+            raise ValueError("Нет данных")
         report = get_report(args.report)
         report_data = report.generate(products)
 
@@ -38,7 +39,7 @@ def main():
 def validate_files(file_paths):
     for file_path in file_paths:
         if not file_path.lower().endswith('.csv'):
-                raise ValueError(f"Файл '{file_path}' должен иметь расширение .csv")
+            raise ValueError(f"Файл '{file_path}' должен иметь расширение .csv")
         try:
             with open(file_path, 'r'):
                 pass
@@ -46,6 +47,7 @@ def validate_files(file_paths):
             raise FileNotFoundError(f"Файл '{file_path}' не существует")
         except IOError as e:
             raise ValueError(f"Не удается прочитать файл '{file_path}': {e}")
+
 
 if __name__ == "__main__":
     main()
